@@ -1,9 +1,3 @@
 [build]
   publish = "."
-  functions = "netlify/functions"
 
-[functions]
-  included_files = [
-    "netlify/functions/Permisos_pagina.csv",
-    "netlify/functions/Documentos.csv"
-  ]
