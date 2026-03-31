@@ -1,5 +1,5 @@
 {
-  "name": "paex360-netlify-functions",
+  "name": "royal_cafe-netlify-functions",
   "version": "1.0.0",
   "dependencies": {
     "@libsql/client": "^0.15.10",
