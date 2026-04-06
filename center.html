@@ -3,42 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Paex360 - Centro</title>
-  <link rel="icon" href="paex360-logo.png" type="image/png">
+  <title>Royal Cafe - Centro</title>
+  <link rel="icon" href="royal-cafe-logo.png" type="image/png">
 
   <style>
     :root{
-      --bg:#f3f2f0;
-      --card:#ffffff;
-      --text:#111827;
-      --muted:#6b7280;
-      --danger:#dc2626;
-      --primary:#111827;
-      --border:#e5e7eb;
-      --shadow:0 10px 30px rgba(0,0,0,.10);
-      --radius:14px;
+      --bg: #f3f2f0;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --shadow: 0 20px 45px rgba(15,23,42,.12);
+      --radius: 18px;
     }
 
     *{ box-sizing:border-box; }
 
     body{
       margin:0;
-      font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      min-height:100vh;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .wrap{
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 16px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
 
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding:12px 16px;
-      background:#ffffff;
-      border-bottom:1px solid var(--border);
-      position:sticky;
-      top:0;
-      z-index:20;
+      padding: 12px 18px;
+      background:#fff;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 25px rgba(0,0,0,.08);
+      border:1px solid var(--border);
+      gap:12px;
+      flex-wrap: wrap;
     }
 
     .brand{
@@ -46,341 +54,446 @@
       align-items:center;
       gap:10px;
       font-weight:900;
-      color:var(--text);
+      letter-spacing:.4px;
     }
 
     .brand img{
-      width:28px;
-      height:28px;
-      border-radius:8px;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
       border:1px solid var(--border);
+      background:#fff;
+      object-fit:cover;
+    }
+
+    .userbar{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight:600;
+    }
+
+    .user-email{
+      font-weight:800;
+      color:#111827;
+      max-width: 220px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .card{
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border:1px solid var(--border);
+      padding: 28px;
+      position: relative;
+      display:flex;
+      flex-direction:column;
+      gap: 16px;
+    }
+
+    .panel{
+      border-radius: 16px;
+      border:1px solid #f1f5f9;
+      padding: 20px 22px;
+      background:#fdfdfd;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .title{
+      margin:0;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing:.3px;
+    }
+
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height:1.5;
+      font-weight:600;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    label{
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing:.1px;
+    }
+
+    input{
+      padding: 12px 12px;
+      border-radius: 12px;
+      border:1px solid var(--border);
+      outline:none;
+      font-size: 14px;
       background:#fff;
     }
 
-    .actions{
-      display:flex;
-      gap:10px;
-      align-items:center;
+    input:focus{
+      border-color:#9ca3af;
     }
 
     .btn{
-      cursor:pointer;
       border:1px solid var(--border);
-      background:#ffffff;
-      color:#111827;
-      padding:10px 12px;
-      border-radius:10px;
-      font-weight:900;
-      font-size:13px;
+      background:#fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 900;
+      font-size: 13px;
+      cursor:pointer;
+      transition:.2s ease;
     }
 
-    .btn:hover{
-      background:#f9fafb;
+    .btn-primary{
+      background:#111827;
+      color:#fff;
+      border-color:#111827;
     }
 
-    .page{
-      max-width:980px;
-      margin:20px auto;
-      padding:0 16px 20px;
+    .btn:disabled{
+      opacity:.6;
+      cursor:not-allowed;
     }
 
-    .msg{
-      display:none;
-      padding:14px;
-      background:rgba(220,38,38,.08);
-      border:1px solid rgba(220,38,38,.25);
-      border-radius:12px;
-      margin:0 0 14px 0;
-      font-weight:900;
-      color:#991b1b;
+    .centro-btn{
+      border:1px solid var(--border);
+      border-radius: 14px;
+      background:#111827;
+      color:#fff;
+      font-size: 14px;
+      font-weight: 900;
+      padding: 16px;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .centro-btn:hover{
+      background:#1f2937;
     }
 
     .loader{
       display:none;
-      padding:12px 14px;
-      background:#f9fafb;
-      border:1px solid var(--border);
-      border-radius:12px;
-      margin:0 0 14px 0;
-      font-weight:900;
-      color:#374151;
-    }
-
-    .main-card{
-      background:var(--card);
-      border-radius:16px;
-      box-shadow:var(--shadow);
-      padding:22px;
-      min-height:560px;
-    }
-
-    .hero-title{
-      margin:0 0 6px 0;
-      font-size:28px;
-      font-weight:900;
-      line-height:1.2;
-    }
-
-    .hero-subtitle{
-      margin:0 0 22px 0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.5;
-      font-weight:600;
-      max-width:760px;
-    }
-
-    .center-box{
-      border:1px solid var(--border);
-      border-radius:12px;
-      background:#fafafa;
-      padding:14px;
-      margin-bottom:18px;
-    }
-
-    .center-label{
-      font-size:12px;
-      font-weight:900;
-      color:#6b7280;
-      text-transform:uppercase;
-      margin-bottom:6px;
-    }
-
-    .center-value{
-      font-size:16px;
-      font-weight:900;
-      color:#111827;
-    }
-
-    .menu-grid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(180px, 1fr));
-      gap:16px;
-      margin-top:8px;
-    }
-
-    .menu-card{
-      border:1px solid var(--border);
-      border-radius:16px;
-      background:#fff;
-      padding:18px;
-      cursor:pointer;
-      transition:.15s ease;
-      text-align:left;
-      min-height:160px;
-    }
-
-    .menu-card:hover{
-      transform:translateY(-2px);
-      box-shadow:0 10px 22px rgba(0,0,0,.06);
-      border-color:#9ca3af;
-    }
-
-    .menu-icon{
-      font-size:28px;
-      margin-bottom:14px;
-      display:block;
-    }
-
-    .menu-title{
-      font-size:18px;
-      font-weight:900;
-      margin:0 0 8px 0;
-      color:#111827;
-    }
-
-    .menu-text{
-      font-size:13px;
-      line-height:1.5;
-      color:#6b7280;
-      font-weight:600;
-      margin:0;
-    }
-
-    .user-line{
-      margin-top:24px;
-      padding-top:16px;
-      border-top:1px solid var(--border);
-      color:#6b7280;
+      padding:10px 12px;
+      border-radius:10px;
       font-size:13px;
       font-weight:700;
+      color:#374151;
+      border:1px solid var(--border);
+      background:#f9fafb;
     }
 
-    @media(max-width: 980px){
-      .menu-grid{
-        grid-template-columns:1fr;
+    .msg{
+      display:none;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid rgba(220,38,38,.25);
+      background:rgba(220,38,38,.08);
+      color:#991b1b;
+      font-weight:700;
+      font-size:13px;
+    }
+
+    .notice{
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color:#991b1b;
+      display:none;
+    }
+
+    .small{
+      font-size: 12px;
+      color:#6b7280;
+      line-height:1.4;
+    }
+
+    .auth-loader{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.92);
+      font-weight: 800;
+      letter-spacing:.5px;
+      color: var(--muted);
+      font-size: 14px;
+      border:1px solid var(--border);
+      z-index:10;
+      display:none;
+    }
+
+    .opinat-inline{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-size: 12px;
+      color:#6b7280;
+      font-weight:600;
+    }
+
+    .opinat-logo{
+      height: 16px;
+      width: auto;
+    }
+
+    .footer-note{
+      text-align:center;
+      color:#94a3b8;
+      font-size:12px;
+    }
+
+    @media (max-width: 640px){
+      .card{
+        padding: 20px;
       }
 
-      .hero-title{
-        font-size:24px;
+      .panel{
+        padding: 18px;
+      }
+
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .btn{
+        width:100%;
+        text-align:center;
+      }
+
+      .centro-btn{
+        width:100%;
       }
     }
   </style>
 </head>
-
 <body>
-  <div class="topbar">
-    <div class="brand">
-      <img src="paex360-logo.png" alt="Paex360">
-      <span id="centerTitle">Centro</span>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <img src="royal-cafe-logo.png" alt="Royal Cafe">
+        <span>Royal Cafe</span>
+      </div>
+      <div class="userbar">
+        <span class="user-email" id="userEmail"></span>
+        <button class="btn" id="logoutBtn" style="display:none;">Cerrar sesión</button>
+      </div>
     </div>
 
-    <div class="actions">
-      <button class="btn" id="backBtn">Volver</button>
-      <button class="btn" id="logoutBtn">Cerrar sesión</button>
-    </div>
-  </div>
+    <div class="card">
+      <div class="msg" id="msg"></div>
+      <div class="loader" id="statusLoader"></div>
+      <div class="auth-loader" id="authLoader">Validando sesión...</div>
 
-  <div class="page">
-    <div class="msg" id="msg"></div>
-    <div class="loader" id="loader">Cargando centro...</div>
+      <div class="panel" id="loginPanel" style="display:none;">
+        <h2 class="title">Acceso seguro</h2>
+        <p class="subtitle">Ingresa con tu cuenta corporativa para abrir el panel de Royal Cafe.</p>
 
-    <div class="main-card" id="content" style="display:none;">
-      <div class="center-box">
-        <div class="center-label">Centro actual</div>
-        <div class="center-value" id="sidebarCenterName">Cargando...</div>
+        <div class="field">
+          <label for="loginEmail">Correo</label>
+          <input id="loginEmail" type="email" placeholder="tu_correo@dominio.com" autocomplete="email">
+        </div>
+
+        <div class="field">
+          <label for="loginPass">Contraseña</label>
+          <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password">
+        </div>
+
+        <button class="btn btn-primary" id="loginBtn">Ingresar</button>
+        <div id="loginError" class="notice"></div>
+        <div id="loginLoader" class="loader">Procesando...</div>
+        <div class="small">Usa la misma cuenta que utilizas para acceder al dashboard principal.</div>
       </div>
 
-      <h1 class="hero-title" id="heroTitle">Centro</h1>
-      <p class="hero-subtitle">
-        Selecciona el módulo al que deseas ingresar. Desde aquí puedes entrar al dashboard Power BI, al Dashboard Online, responder la encuesta o abrir los documentos PDF del centro.
-      </p>
-
-      <div class="menu-grid">
-        <button class="menu-card" id="dashboardCard">
-          <span class="menu-icon">📊</span>
-          <h2 class="menu-title">Dashboard</h2>
-          <p class="menu-text">Visualiza el reporte Power BI del centro seleccionado.</p>
-        </button>
-
-        <button class="menu-card" id="onlineDashboardCard">
-          <span class="menu-icon">🖥️</span>
-          <h2 class="menu-title">Dashboard Online</h2>
-          <p class="menu-text">Abre el dashboard HTML conectado a la base de datos en tiempo real.</p>
-        </button>
-
-        <button class="menu-card" id="surveyCard">
-          <span class="menu-icon">📝</span>
-          <h2 class="menu-title">Encuesta</h2>
-          <p class="menu-text">Accede al formulario de autoevaluación y seguimiento.</p>
-        </button>
-
-        <button class="menu-card" id="pdfCard">
-          <span class="menu-icon">📄</span>
-          <h2 class="menu-title">Documentos PDF</h2>
-          <p class="menu-text">Consulta la documentación disponible del centro en un visor dedicado.</p>
-        </button>
+      <div class="panel" id="centrosPanel" style="display:none;">
+        <h2 class="title" id="centerTitle">Centro</h2>
+        <p class="subtitle" id="centerSubtitle">Accede al panel interactivo desde cualquier dispositivo.</p>
+        <button class="btn centro-btn" id="openDashboardBtn" disabled>Abrir dashboard</button>
+        <div id="mensaje-permisos" class="notice"></div>
+        <div class="small support">Si no aparece el centro esperado, escribe a soporte@royalcafe.com.</div>
       </div>
 
-      <div class="user-line" id="userLine"></div>
+      <div class="footer-note">
+        <span class="opinat-inline">
+          Desarrollado por
+          <a href="https://www.opinat.com/" target="_blank" rel="noopener noreferrer">
+            <img class="opinat-logo" src="LogoOpinat.png" alt="Opinat">
+          </a>
+        </span>
+      </div>
     </div>
   </div>
 
   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const loginPanel = document.getElementById("loginPanel");
+    const centrosPanel = document.getElementById("centrosPanel");
+    const authLoader = document.getElementById("authLoader");
+    const statusLoader = document.getElementById("statusLoader");
+    const msgEl = document.getElementById("msg");
+
+    const loginBtn = document.getElementById("loginBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const loginError = document.getElementById("loginError");
+    const loginLoader = document.getElementById("loginLoader");
+    const userEmailEl = document.getElementById("userEmail");
+
+    const openDashboardBtn = document.getElementById("openDashboardBtn");
+    const mensajePermisos = document.getElementById("mensaje-permisos");
+    const centerTitleEl = document.getElementById("centerTitle");
+    const centerSubtitleEl = document.getElementById("centerSubtitle");
+
     const CENTERS = {
       salus: { label: "Clínica SALUS" },
       diagonal: { label: "Clínica Diagonal" }
     };
 
-    const msg = document.getElementById("msg");
-    const loader = document.getElementById("loader");
-    const content = document.getElementById("content");
-    const centerTitle = document.getElementById("centerTitle");
-    const sidebarCenterName = document.getElementById("sidebarCenterName");
-    const heroTitle = document.getElementById("heroTitle");
-    const userLine = document.getElementById("userLine");
-
-    const dashboardCard = document.getElementById("dashboardCard");
-    const onlineDashboardCard = document.getElementById("onlineDashboardCard");
-    const surveyCard = document.getElementById("surveyCard");
-    const pdfCard = document.getElementById("pdfCard");
-
-    function showError(text){
-      msg.style.display = "block";
-      msg.textContent = text;
-      loader.style.display = "none";
-      content.style.display = "none";
-    }
-
-    function hideError(){
-      msg.style.display = "none";
-      msg.textContent = "";
-    }
-
-    function setLoading(on, text = "Cargando centro..."){
-      loader.style.display = on ? "block" : "none";
-      loader.textContent = text;
-      if (on) hideError();
-    }
-
-    function getQueryParam(name){
-      const url = new URL(window.location.href);
-      return (url.searchParams.get(name) || "").trim();
-    }
-
-    async function pedirPermisos(email){
-      const resp = await fetch("/.netlify/functions/getPermissions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email })
-      });
-
-      const data = await resp.json().catch(() => ({}));
-
-      if (!resp.ok) {
-        throw new Error(data?.error || "No se pudieron consultar permisos");
-      }
-
-      return data;
-    }
-
-    function validarAccesoCentro(permissions, center){
-      if (center === "diagonal") return permissions.Clinica_Diagonal === true;
-      if (center === "salus") return permissions.Clinica_Salus === true;
-      return false;
-    }
-
-    const centerKey = getQueryParam("center").toLowerCase();
+    const centerKey = (new URL(window.location.href).searchParams.get("center") || "").toLowerCase().trim();
     const centerCfg = CENTERS[centerKey];
 
     if (!centerCfg) {
-      showError("Centro inválido. Vuelve y selecciona un centro.");
+      setMessage("Centro inválido. Regresa e intenta de nuevo.");
       throw new Error("Invalid center");
     }
 
-    centerTitle.textContent = centerCfg.label;
-    sidebarCenterName.textContent = centerCfg.label;
-    heroTitle.textContent = centerCfg.label;
+    centerTitleEl.textContent = centerCfg.label;
+    centerSubtitleEl.textContent = `Accede al dashboard de ${centerCfg.label} desde cualquier dispositivo.`;
+    openDashboardBtn.textContent = `Abrir dashboard · ${centerCfg.label}`;
 
-    let firebaseConfig = null;
-
-    try {
-      const r = await fetch("/.netlify/functions/getConfig", { cache: "no-store" });
-      const cfg = await r.json().catch(() => ({}));
-
-      if (!r.ok) {
-        throw new Error(cfg?.error || "getConfig no respondió OK");
-      }
-
-      firebaseConfig = cfg.firebaseConfig || cfg;
-    } catch (e) {
-      showError("No se pudo cargar la configuración de Firebase.");
-      throw e;
+    function setAuthLoader(on){
+      authLoader.style.display = on ? "flex" : "none";
     }
 
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    function setStatusLoader(on, text = ""){
+      statusLoader.style.display = on ? "block" : "none";
+      statusLoader.textContent = text || "";
+    }
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    function setMessage(text){
+      msgEl.style.display = text ? "block" : "none";
+      msgEl.textContent = text || "";
+    }
 
-    document.getElementById("backBtn").onclick = () => {
-      window.location.href = "index.html";
-    };
+    function setLoginError(msg){
+      loginError.style.display = msg ? "block" : "none";
+      loginError.textContent = msg || "";
+    }
 
-    document.getElementById("logoutBtn").onclick = async () => {
-      await signOut(auth);
-      window.location.href = "index.html";
+    function setLoginLoader(on){
+      loginLoader.style.display = on ? "block" : "none";
+      loginBtn.disabled = on;
+    }
+
+    function showLogin(){
+      setAuthLoader(false);
+      setStatusLoader(false);
+      loginPanel.style.display = "flex";
+      centrosPanel.style.display = "none";
+      logoutBtn.style.display = "none";
+      userEmailEl.textContent = "";
+      openDashboardBtn.disabled = true;
+      setMessage("");
+      setLoginError("");
+      hidePermMessage();
+      setLoginLoader(false);
+    }
+
+    function showCentros(email){
+      setAuthLoader(false);
+      loginPanel.style.display = "none";
+      centrosPanel.style.display = "flex";
+      logoutBtn.style.display = "inline-flex";
+      userEmailEl.textContent = email || "";
+    }
+
+    function hidePermMessage(){
+      mensajePermisos.style.display = "none";
+      mensajePermisos.textContent = "";
+    }
+
+    function showPermMessage(text){
+      mensajePermisos.style.display = "block";
+      mensajePermisos.textContent = text;
+    }
+
+    function validarAccesoCentro(permissions){
+      if (centerKey === "diagonal") return permissions.Clinica_Diagonal === true;
+      if (centerKey === "salus") return permissions.Clinica_Salus === true;
+      return false;
+    }
+
+    async function cargarPermisosYRender(email){
+      const cleanEmail = (email || "").toLowerCase().trim();
+      if (!cleanEmail) {
+        showPermMessage("No se pudo leer el correo del usuario.");
+        openDashboardBtn.disabled = true;
+        return;
+      }
+
+      try {
+        setStatusLoader(true, "Validando permisos...");
+
+        const resp = await fetch("/.netlify/functions/getPermissions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: cleanEmail })
+        });
+
+        const data = await resp.json().catch(() => ({}));
+
+        if (!resp.ok) {
+          showPermMessage(data?.error || "No autorizado.");
+          openDashboardBtn.disabled = true;
+          return;
+        }
+
+        const permissions = data?.permissions || {};
+        const autorizado = validarAccesoCentro(permissions);
+
+        if (!autorizado) {
+          showPermMessage("Tu usuario no tiene acceso a este centro.");
+          openDashboardBtn.disabled = true;
+          await signOut(auth);
+          return;
+        }
+
+        hidePermMessage();
+        openDashboardBtn.disabled = false;
+      } catch (e) {
+        console.error("Error permisos:", e);
+        showPermMessage("No se pudo consultar permisos (error de red).");
+        openDashboardBtn.disabled = true;
+      } finally {
+        setStatusLoader(false);
+      }
+    }
+
+    const setActivityListeners = () => {
+      const events = ["mousemove","mousedown","keydown","scroll","touchstart","click"];
+      events.forEach(evt => window.addEventListener(evt, resetInactivityTimer, { passive:true }));
     };
 
     const INACTIVITY_LIMIT_MS = 30 * 60 * 1000;
@@ -394,11 +507,11 @@
     }
 
     async function forceLogoutByInactivity(){
-      try {
+      try{
         await signOut(auth);
-      } catch (e) {
+      }catch(e){
         console.warn("Logout por inactividad falló:", e);
-      } finally {
+      }finally{
         window.location.href = "index.html";
       }
     }
@@ -408,65 +521,69 @@
       inactivityTimer = setTimeout(forceLogoutByInactivity, INACTIVITY_LIMIT_MS);
     }
 
-    function attachActivityListeners(){
-      const events = ["mousemove","mousedown","keydown","scroll","touchstart","click"];
-      events.forEach(evt => window.addEventListener(evt, resetInactivityTimer, { passive: true }));
+    setAuthLoader(true);
+
+    let firebaseConfig = null;
+
+    try {
+      const response = await fetch("/.netlify/functions/getConfig", { cache: "no-store" });
+      const cfg = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(cfg?.error || "getConfig no respondió OK");
+      }
+      firebaseConfig = cfg.firebaseConfig || cfg;
+    } catch (error) {
+      setMessage("No se pudo cargar la configuración de Firebase.");
+      console.error("Error getConfig:", error);
+      throw error;
     }
 
-    attachActivityListeners();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    setActivityListeners();
+
+    loginBtn.addEventListener("click", async () => {
+      setLoginError("");
+      const email = document.getElementById("loginEmail").value.trim();
+      const pass = document.getElementById("loginPass").value;
+
+      if (!email || !pass) {
+        setLoginError("Debes ingresar correo y contraseña.");
+        return;
+      }
+
+      setLoginLoader(true);
+
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+      } catch (error) {
+        console.error("Error login:", error);
+        setLoginError("Credenciales inválidas o usuario no existe.");
+      } finally {
+        setLoginLoader(false);
+      }
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      showLogin();
+    });
 
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         clearInactivityTimer();
-        window.location.href = "index.html";
+        showLogin();
         return;
       }
 
       resetInactivityTimer();
+      showCentros(user.email);
+      await cargarPermisosYRender(user.email);
+    });
 
-      try {
-        setLoading(true, "Validando acceso al centro...");
-
-        const email = (user.email || "").toLowerCase().trim();
-        userLine.textContent = `Usuario: ${email}`;
-
-        const permisosData = await pedirPermisos(email);
-        const permissions = permisosData.permissions || {};
-
-        const autorizado = validarAccesoCentro(permissions, centerKey);
-
-        if (!autorizado) {
-          await signOut(auth);
-          showError("No tienes permisos para ingresar a este centro.");
-          setTimeout(() => {
-            window.location.href = "index.html";
-          }, 1500);
-          return;
-        }
-
-        dashboardCard.onclick = () => {
-          window.location.href = `dashboard.html?center=${centerKey}`;
-        };
-
-        onlineDashboardCard.onclick = () => {
-          window.location.href = `dashboard-online.html?center=${centerKey}`;
-        };
-
-        surveyCard.onclick = () => {
-          window.location.href = `survey.html?center=${centerKey}`;
-        };
-
-        pdfCard.onclick = () => {
-          window.location.href = `documents.html?center=${centerKey}`;
-        };
-
-        setLoading(false);
-        content.style.display = "block";
-
-      } catch (e) {
-        console.error(e);
-        showError("No se pudo cargar el centro: " + e.message);
-      }
+    openDashboardBtn.addEventListener("click", () => {
+      window.location.href = `dashboard.html?center=${encodeURIComponent(centerKey)}`;
     });
   </script>
 </body>

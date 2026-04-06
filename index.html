@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Paex360 - Acceso</title>
-  <link rel="icon" href="paex360-logo.png" type="image/png">
+  <title>Royal Cafe - Acceso</title>
+  <link rel="icon" href="royal-cafe-logo.png" type="image/png">
 
   <style>
     :root{
@@ -16,29 +16,39 @@
       --primary:#111827;
       --border:#e5e7eb;
       --shadow: 0 10px 30px rgba(0,0,0,.10);
-      --radius: 14px;
+      --radius: 18px;
     }
 
     *{ box-sizing:border-box; }
+
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 24px;
     }
 
-    .wrap{ width: min(1100px, 100%); }
+    .wrap{
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      padding: 28px 16px 32px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
 
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      margin-bottom: 14px;
+      flex-wrap:wrap;
+      gap:18px;
+      background: var(--card);
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      padding:14px 18px;
+      box-shadow: var(--shadow);
     }
 
     .brand{
@@ -50,14 +60,15 @@
     .brand img{
       height: 34px;
       width: 34px;
-      border-radius: 10px;
+      border-radius: 12px;
       object-fit: cover;
+      border:1px solid var(--border);
     }
 
     .brand h1{
-      font-size: 16px;
+      font-size: 18px;
       margin: 0;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: .2px;
     }
 
@@ -68,18 +79,22 @@
       color: var(--muted);
       font-size: 13px;
       font-weight: 700;
+      flex-wrap:wrap;
     }
 
     .btn{
       border:1px solid var(--border);
       background:#fff;
-      padding: 10px 12px;
-      border-radius: 10px;
+      padding: 10px 16px;
+      border-radius: 12px;
       cursor:pointer;
       font-weight: 800;
       font-size: 13px;
+      width: auto;
     }
+
     .btn:disabled{ opacity:.55; cursor:not-allowed; }
+
     .btn-primary{
       background: var(--primary);
       color:#fff;
@@ -91,21 +106,20 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 28px;
+      border: 1px solid var(--border);
     }
 
     .grid{
       display:grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 18px;
-    }
-    @media(max-width: 900px){
-      .grid{ grid-template-columns: 1fr; }
     }
 
     .panel{
       border:1px solid var(--border);
       border-radius: 14px;
       padding: 18px;
+      background:#fff;
     }
 
     .title{
@@ -173,12 +187,11 @@
       font-weight: 800;
     }
 
-
     .auth-loader{
       display:flex;
       align-items:center;
       justify-content:center;
-      min-height: 320px;
+      min-height: 260px;
       border:1px solid var(--border);
       border-radius: 14px;
       font-weight: 800;
@@ -201,8 +214,11 @@
       cursor: pointer;
       font-weight: 900;
       font-size: 13px;
+      transition: border-color .2s ease, background .2s ease;
+      flex:1 1 calc(50% - 12px);
+      text-align:center;
     }
-    .centro-btn:hover{ border-color: #9ca3af; }
+    .centro-btn:hover{ border-color: #9ca3af; background:#f9fafb; }
 
     .notice{
       margin-top: 10px;
@@ -223,18 +239,18 @@
     .panel.panel-hero .hero-img{
       display: block;
       margin: auto;
-      max-width: 80%;
-      max-height: 80%;
-      width: auto;
+      width: min(480px, 100%);
       height: auto;
-      object-fit: contain;
+      object-fit: cover;
       border-radius: 14px;
+      border: 1px solid var(--border);
     }
 
     .opinat-inline{
       display:inline-flex;
       align-items:center;
       gap:6px;
+      font-size: 12px;
     }
     .opinat-logo{
       height: 14px;
@@ -242,16 +258,42 @@
       vertical-align: middle;
       display:inline-block;
     }
+
+    @media (max-width: 640px){
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .centro-btn{
+        flex:1 1 100%;
+      }
+
+      .panel {
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 480px){
+      .wrap{
+        padding: 16px 12px 24px;
+      }
+
+      .btn{
+        width: 100%;
+        justify-content:center;
+      }
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
     <div class="topbar">
-      <div class="brand">
-        <img src="paex360-logo.png" alt="Paex360">
-        <h1>Paex360</h1>
-      </div>
+    <div class="brand">
+      <img src="royal-cafe-logo.png" alt="Royal Cafe">
+      <h1>Royal Cafe</h1>
+    </div>
 
       <div class="userbar">
         <span id="userEmail"></span>
@@ -292,7 +334,7 @@
         </div>
 
         <div class="panel panel-hero" id="heroPanel" style="display:none;">
-          <img class="hero-img" src="PAEX360 CAST.jpg" alt="Paex360 Cast">
+        <img class="hero-img" src="royal-cafe-cast.jpg" alt="Royal Cafe Cast">
         </div>
 
         <div class="panel" id="centrosPanel" style="display:none;">
