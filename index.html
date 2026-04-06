@@ -338,24 +338,13 @@
         <img class="hero-img" src="royal-cafe-logo.png" alt="Royal Cafe">
         </div>
 
-        <div class="panel" id="centrosPanel" style="display:none;">
-          <h2 class="title">Selecciona un centro</h2>
-          <p class="subtitle">Se mostrarán únicamente los centros autorizados para tu usuario.</p>
-
-          <div id="centros-container" class="centros"></div>
-          <div id="mensaje-permisos" class="notice"></div>
-
-          <div class="small" style="margin-top:10px;">
-            Si no aparece ningún botón, solicita a paula.fernandez@atheneasolutions.com el acceso.
-          </div>
-        </div>
+        <!-- El centro ya no se valida/selecciona: después del login se redirige directo al dashboard -->
       </div>
     </div>
   </div>
 
   <script type="module">
     const loginPanel = document.getElementById("loginPanel");
-    const centrosPanel = document.getElementById("centrosPanel");
     const heroPanel = document.getElementById("heroPanel");
     const authLoader = document.getElementById("authLoader");
 
@@ -367,9 +356,6 @@
 
     const userEmailEl = document.getElementById("userEmail");
 
-    const centrosContainer = document.getElementById("centros-container");
-    const mensajePermisos = document.getElementById("mensaje-permisos");
-
     function setAuthLoader(on){
       authLoader.style.display = on ? "flex" : "none";
     }
@@ -377,22 +363,10 @@
     function showLogin() {
       setAuthLoader(false);
       loginPanel.style.display = "block";
-      centrosPanel.style.display = "none";
       heroPanel.style.display = "block";
       logoutBtn.style.display = "none";
       userEmailEl.textContent = "";
-      centrosContainer.innerHTML = "";
-      hidePermMessage();
       setLoginError("");
-    }
-
-    function showCentros(email) {
-      setAuthLoader(false);
-      loginPanel.style.display = "none";
-      centrosPanel.style.display = "block";
-      heroPanel.style.display = "none";
-      logoutBtn.style.display = "inline-block";
-      userEmailEl.textContent = email;
     }
 
     function setLoginError(msg) {
@@ -405,14 +379,9 @@
       loginBtn.disabled = on;
     }
 
-    function showPermMessage(msg) {
-      mensajePermisos.style.display = "block";
-      mensajePermisos.textContent = msg;
-    }
-
-    function hidePermMessage() {
-      mensajePermisos.style.display = "none";
-      mensajePermisos.textContent = "";
+    function goToDashboard(){
+      // Dashboard unico: no se valida centro
+      window.location.href = "dashboard.html";
     }
 
     let firebaseConfig = null;
@@ -478,66 +447,7 @@
 
     attachActivityListeners();
 
-    async function cargarPermisosYRender(email) {
-      const cleanEmail = (email || "").toLowerCase().trim();
-
-      if (!cleanEmail) {
-        showPermMessage("No se pudo leer el email del usuario logueado.");
-        return;
-      }
-
-      let data;
-      try {
-        const resp = await fetch("/.netlify/functions/getPermissions", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: cleanEmail })
-        });
-
-        data = await resp.json().catch(() => ({}));
-
-        if (!resp.ok) {
-          showPermMessage(data?.error || "No autorizado.");
-          return;
-        }
-      } catch (e) {
-        console.error("❌ Error llamando getPermissions:", e);
-        showPermMessage("No se pudo consultar permisos (error de red).");
-        return;
-      }
-
-      const perms = data?.permissions || {};
-      const puedeDiagonal = perms.Clinica_Diagonal === true;
-      const puedeSalus = perms.Clinica_Salus === true;
-
-      if (!puedeDiagonal && !puedeSalus) {
-        showPermMessage("No tienes permisos para visualizar ningún tablero.");
-        return;
-      }
-
-      hidePermMessage();
-      renderBotonesCentros({ puedeDiagonal, puedeSalus });
-    }
-
-    function renderBotonesCentros({ puedeDiagonal, puedeSalus }) {
-      centrosContainer.innerHTML = "";
-
-      if (puedeDiagonal) {
-        const btn = document.createElement("button");
-        btn.className = "centro-btn";
-        btn.textContent = "Clínica Diagonal";
-        btn.onclick = () => window.location.href = "center.html?center=diagonal";
-        centrosContainer.appendChild(btn);
-      }
-
-      if (puedeSalus) {
-        const btn = document.createElement("button");
-        btn.className = "centro-btn";
-        btn.textContent = "Clínica SALUS";
-        btn.onclick = () => window.location.href = "center.html?center=salus";
-        centrosContainer.appendChild(btn);
-      }
-    }
+    // Nota: Se removio la validacion/seleccion de centros
 
     loginBtn.addEventListener("click", async () => {
       setLoginError("");
@@ -584,8 +494,7 @@
       }
 
       resetInactivityTimer();
-      showCentros(user.email);
-      await cargarPermisosYRender(user.email);
+      goToDashboard();
     });
   </script>
 </body>

@@ -17,13 +17,28 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { workspaceId, reportId } = JSON.parse(event.body);
+    let body = {};
+    try {
+      body = event.body ? JSON.parse(event.body) : {};
+    } catch {
+      body = {};
+    }
+
+    // Prefer server-side config for a single-dashboard setup.
+    const workspaceId = process.env.PBI_WORKSPACE_ID || body.workspaceId;
+    const reportId = process.env.PBI_REPORT_ID || body.reportId;
 
     if (!workspaceId || !reportId) {
       return {
-        statusCode: 400,
+        statusCode: 500,
         headers: { "Access-Control-Allow-Origin": ALLOWED_ORIGIN },
-        body: JSON.stringify({ error: "workspaceId y reportId son obligatorios" })
+        body: JSON.stringify({
+          error: "Faltan variables de entorno para Power BI",
+          faltantes: [
+            !workspaceId ? "PBI_WORKSPACE_ID" : null,
+            !reportId ? "PBI_REPORT_ID" : null
+          ].filter(Boolean)
+        })
       };
     }
 

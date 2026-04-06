@@ -177,19 +177,6 @@
   <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.23.1/dist/powerbi.min.js"></script>
 
   <script type="module">
-    const WORKSPACE_ID = "7230301b-540b-4f1a-b94d-c3ff22d4564d";
-
-    const CENTERS = {
-      salus: {
-        label: "Clínica SALUS",
-        reportId: "be0ed5d8-4753-4dd0-b031-ed0b7ab57d96"
-      },
-      diagonal: {
-        label: "Clínica Diagonal",
-        reportId: "c82cbcf1-7b93-458a-8f14-3b7a86800a23"
-      }
-    };
-
     const msg = document.getElementById("msg");
     const loader = document.getElementById("loader");
     const centerTitle = document.getElementById("centerTitle");
@@ -216,16 +203,7 @@
       return (url.searchParams.get(name) || "").trim();
     }
 
-    const centerKey = getQueryParam("center").toLowerCase();
-    const centerCfg = CENTERS[centerKey];
-
-    if (!centerCfg) {
-      showError("Centro inválido. Vuelve y selecciona un centro.");
-      centerTitle.textContent = "Dashboard";
-      throw new Error("Invalid center");
-    }
-
-    centerTitle.textContent = centerCfg.label;
+    centerTitle.textContent = "Dashboard";
 
     let firebaseConfig = null;
 
@@ -250,7 +228,7 @@
     const auth = getAuth(app);
 
     document.getElementById("backBtn").onclick = () => {
-      window.location.href = `center.html?center=${centerKey}`;
+      window.location.href = "index.html";
     };
 
     document.getElementById("logoutBtn").onclick = async () => {
@@ -290,11 +268,11 @@
 
     attachActivityListeners();
 
-    async function pedirEmbedData(workspaceId, reportId){
+    async function pedirEmbedData(){
       const resp = await fetch("/.netlify/functions/getPowerBI", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ workspaceId, reportId })
+        body: JSON.stringify({})
       });
 
       const data = await resp.json().catch(() => ({}));
@@ -305,28 +283,6 @@
       }
 
       return data;
-    }
-
-    async function pedirPermisos(email){
-      const resp = await fetch("/.netlify/functions/getPermissions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email })
-      });
-
-      const data = await resp.json().catch(() => ({}));
-
-      if (!resp.ok) {
-        throw new Error(data?.error || "No se pudieron consultar permisos");
-      }
-
-      return data;
-    }
-
-    function validarAccesoCentro(permissions, center){
-      if (center === "diagonal") return permissions.Clinica_Diagonal === true;
-      if (center === "salus") return permissions.Clinica_Salus === true;
-      return false;
     }
 
     function embedReport(embedUrl, embedToken){
@@ -363,23 +319,7 @@
       try {
         setLoading(true);
 
-        const email = (user.email || "").toLowerCase().trim();
-
-        const permisosData = await pedirPermisos(email);
-        const permissions = permisosData.permissions || {};
-
-        const autorizado = validarAccesoCentro(permissions, centerKey);
-
-        if (!autorizado) {
-          await signOut(auth);
-          showError("No tienes permisos para ingresar a este centro.");
-          setTimeout(() => {
-            window.location.href = "index.html";
-          }, 1500);
-          return;
-        }
-
-        const data = await pedirEmbedData(WORKSPACE_ID, centerCfg.reportId);
+        const data = await pedirEmbedData();
 
         const embedToken = data.embedToken;
         const embedUrl = data.embedUrl;
