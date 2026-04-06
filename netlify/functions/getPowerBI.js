@@ -1,7 +1,7 @@
 // netlify/functions/getPowerBI.js
 const soap = require("soap");
 
-const ALLOWED_ORIGIN = "https://lucky-palmier-ad2422.netlify.app";
+const ALLOWED_ORIGIN = "https://reportroyalcafe.netlify.app";
 
 exports.handler = async (event) => {
   if (event.httpMethod === "OPTIONS") {
@@ -17,28 +17,13 @@ exports.handler = async (event) => {
   }
 
   try {
-    let body = {};
-    try {
-      body = event.body ? JSON.parse(event.body) : {};
-    } catch {
-      body = {};
-    }
-
-    // Prefer server-side config for a single-dashboard setup.
-    const workspaceId = process.env.PBI_WORKSPACE_ID || body.workspaceId;
-    const reportId = process.env.PBI_REPORT_ID || body.reportId;
+    const { workspaceId, reportId } = JSON.parse(event.body || "{}");
 
     if (!workspaceId || !reportId) {
       return {
-        statusCode: 500,
+        statusCode: 400,
         headers: { "Access-Control-Allow-Origin": ALLOWED_ORIGIN },
-        body: JSON.stringify({
-          error: "Faltan variables de entorno para Power BI",
-          faltantes: [
-            !workspaceId ? "PBI_WORKSPACE_ID" : null,
-            !reportId ? "PBI_REPORT_ID" : null
-          ].filter(Boolean)
-        })
+        body: JSON.stringify({ error: "workspaceId y reportId son obligatorios" })
       };
     }
 

@@ -177,6 +177,11 @@
   <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.23.1/dist/powerbi.min.js"></script>
 
   <script type="module">
+    // IDs del reporte Power BI (antes dependían del centro).
+    // Si necesitas cambiar el reporte, ajusta estos 2 valores.
+    const WORKSPACE_ID = "7230301b-540b-4f1a-b94d-c3ff22d4564d";
+    const REPORT_ID = "be0ed5d8-4753-4dd0-b031-ed0b7ab57d96";
+
     const msg = document.getElementById("msg");
     const loader = document.getElementById("loader");
     const centerTitle = document.getElementById("centerTitle");
@@ -272,7 +277,7 @@
       const resp = await fetch("/.netlify/functions/getPowerBI", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({})
+        body: JSON.stringify({ workspaceId: WORKSPACE_ID, reportId: REPORT_ID })
       });
 
       const data = await resp.json().catch(() => ({}));
