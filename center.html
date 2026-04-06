@@ -532,6 +532,10 @@
         throw new Error(cfg?.error || "getConfig no respondió OK");
       }
       firebaseConfig = cfg.firebaseConfig || cfg;
+      console.log("✅ Firebase config cargado OK:", {
+        projectId: firebaseConfig?.projectId,
+        authDomain: firebaseConfig?.authDomain
+      });
     } catch (error) {
       setMessage("No se pudo cargar la configuración de Firebase.");
       console.error("Error getConfig:", error);
@@ -556,10 +560,19 @@
       setLoginLoader(true);
 
       try {
+        console.log("Intentando login en Firebase:", {
+          projectId: firebaseConfig?.projectId,
+          authDomain: firebaseConfig?.authDomain,
+          email
+        });
+
         await signInWithEmailAndPassword(auth, email, pass);
       } catch (error) {
+        const code = error?.code || "auth/error";
         console.error("Error login:", error);
-        setLoginError("Credenciales inválidas o usuario no existe.");
+        setLoginError(
+          `No se pudo iniciar sesión (${code}). Verifica correo/contraseña y que el proyecto Firebase sea el correcto (${firebaseConfig?.projectId || "sin projectId"}).`
+        );
       } finally {
         setLoginLoader(false);
       }
